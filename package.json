@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "arbundles": "github:acolytec3/arbundles#6b3208080d0224e47f3ee9e9fbdc2307055790f3",
     "axios": "^0.24.0",
-    "ethers": "^5.5.1"
+    "ethers": "^5.5.1",
+    "arbundles": "github:acolytec3/arbundles#6619288714c05d5fa1ba3940e894eae7d5617e3d"
   },
   "devDependencies": {
     "@types/node": "^16.11.10",

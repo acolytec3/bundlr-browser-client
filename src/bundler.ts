@@ -5,12 +5,16 @@ import { createData, InjectedEthereumSigner } from 'arbundles';
 export class Bundler {
     private bundlerAddress: string
     private provider: ethers.providers.Web3Provider
-
+    private signer: InjectedEthereumSigner
     constructor(bundlerAddress: string, provider: ethers.providers.Web3Provider) {
         this.bundlerAddress = bundlerAddress
         this.provider = provider
+        this.signer = new InjectedEthereumSigner(this.provider);
     }
 
+    connect = async () => {
+        await this.signer.setPublicKey()
+    }
     getPrice = async (bytesSize: number): Promise<BigNumber> => {
         const res = await axios.get(`${this.bundlerAddress}/price/matic/${bytesSize}`)
         try {
@@ -59,10 +63,8 @@ export class Bundler {
     };
 
     uploadItem = async (data: Buffer): Promise<any> => {
-        const signer = new InjectedEthereumSigner(this.provider);
-        await signer.setPublicKey();
-        const item = createData(data, signer);
-        await item.sign(signer);
+        const item = createData(data, this.signer);
+        await item.sign(this.signer);
         const res = await axios.post(`${this.bundlerAddress}/tx/matic`, item.getRaw(), {
             headers: { "Content-Type": "application/octet-stream", 'Access-Control-Allow-Origin': '*', },
             timeout: 100000,
