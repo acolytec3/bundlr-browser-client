@@ -2,6 +2,10 @@ import { ethers, BigNumber } from 'ethers'
 import axios, { AxiosResponse } from 'axios'
 import { createData, InjectedEthereumSigner } from 'arbundles';
 
+export type Tag = {
+    name: string,
+    value: string
+}
 export class BundlrBrowserClient {
     private bundlerAddress: string
     private provider: ethers.providers.Web3Provider
@@ -23,7 +27,15 @@ export class BundlrBrowserClient {
      * Computes the public key for the address associated with a web3provider necessary for signing bundlr network transactions
      */
     connect = async () => {
-        await this.signer.setPublicKey()
+        try {
+            await this.signer.setPublicKey()
+            if (!this.signer.publicKey) {
+                console.log('no key generated')
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
 
     /**
@@ -99,16 +111,17 @@ export class BundlrBrowserClient {
     /**
      * Uploads data to the bundlr.network
      * @param data bytes to be uploaded to the bundlr.network
+     * @param tags key value pairs
      * @returns an `AxiosResponse` object containing the status and statuscode indicating whether data was successfully uploaded or not 
      */
-    uploadItem = async (data: Buffer): Promise<AxiosResponse> => {
-        const item = createData(data, this.signer);
+    uploadItem = async (data: Buffer, tags: Tag[]): Promise<AxiosResponse> => {
+        const item = createData(data, this.signer, { tags });
         await item.sign(this.signer);
         const res = await axios.post(`${this.bundlerAddress}/tx/matic`, item.getRaw(), {
             headers: { "Content-Type": "application/octet-stream", 'Access-Control-Allow-Origin': '*', },
             timeout: 100000,
             maxBodyLength: Infinity,
-            validateStatus: (status) => (status > 200 && status < 300) || status !== 402
+            validateStatus: (status: any) => (status > 200 && status < 300) || status !== 402
         })
         if (res.status === 402) {
             throw new Error("not enough funds to send data")
