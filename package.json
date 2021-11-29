@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "arbundles": "github:acolytec3/arbundles#9ba61ad89b5826debb1087a6c97c03fb5c74b1f2",
+    "arbundles": "github:acolytec3/arbundles#d758e95f52f520e00c6238d8d9ead0f1c280dc80",
     "axios": "^0.24.0",
     "ethers": "^5.5.1"
   },
