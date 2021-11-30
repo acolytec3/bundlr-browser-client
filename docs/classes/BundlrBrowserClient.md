@@ -22,6 +22,7 @@
 - [getBundlrBalance](BundlrBrowserClient.md#getbundlrbalance)
 - [getPrice](BundlrBrowserClient.md#getprice)
 - [uploadItem](BundlrBrowserClient.md#uploaditem)
+- [withdraw](BundlrBrowserClient.md#withdraw)
 
 ## Constructors
 
@@ -40,7 +41,7 @@ Creates a new instance of the bundlrBrowserClient
 
 #### Defined in
 
-[bundler.ts:20](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L20)
+[bundler.ts:28](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L28)
 
 ## Properties
 
@@ -50,7 +51,7 @@ Creates a new instance of the bundlrBrowserClient
 
 #### Defined in
 
-[bundler.ts:10](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L10)
+[bundler.ts:18](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L18)
 
 ___
 
@@ -60,7 +61,7 @@ ___
 
 #### Defined in
 
-[bundler.ts:11](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L11)
+[bundler.ts:19](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L19)
 
 ___
 
@@ -70,7 +71,7 @@ ___
 
 #### Defined in
 
-[bundler.ts:12](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L12)
+[bundler.ts:20](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L20)
 
 ## Methods
 
@@ -86,7 +87,7 @@ Computes the public key for the address associated with a web3provider necessary
 
 #### Defined in
 
-[bundler.ts:29](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L29)
+[bundler.ts:37](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L37)
 
 ___
 
@@ -111,7 +112,7 @@ an unsigned `ethers.providers.TransactionRequest`
 
 #### Defined in
 
-[bundler.ts:78](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L78)
+[bundler.ts:86](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L86)
 
 ___
 
@@ -136,7 +137,7 @@ status code 200 indicates an account was successfully funded
 
 #### Defined in
 
-[bundler.ts:92](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L92)
+[bundler.ts:100](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L100)
 
 ___
 
@@ -160,7 +161,7 @@ the current balance of the supplied `address` on the currently connected bundlr 
 
 #### Defined in
 
-[bundler.ts:67](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L67)
+[bundler.ts:75](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L75)
 
 ___
 
@@ -184,7 +185,7 @@ the cost of uploading `bytesSize` ethers `BigNumber` denominated in MATIC wei (1
 
 #### Defined in
 
-[bundler.ts:47](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L47)
+[bundler.ts:55](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L55)
 
 ___
 
@@ -209,4 +210,28 @@ an `AxiosResponse` object containing the status and statuscode indicating whethe
 
 #### Defined in
 
-[bundler.ts:117](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L117)
+[bundler.ts:125](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L125)
+
+___
+
+### withdraw
+
+▸ **withdraw**(`amount`): `Promise`<`AxiosResponse`<`any`, `any`\>\>
+
+Request withdrawal of funds deposited with bundler node
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `amount` | `BigNumber` | `Ethers BigNumber` representing the amount of the requested withdrawal |
+
+#### Returns
+
+`Promise`<`AxiosResponse`<`any`, `any`\>\>
+
+`AxiosResponse` representing the success/failure of the request
+
+#### Defined in
+
+[bundler.ts:145](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L145)

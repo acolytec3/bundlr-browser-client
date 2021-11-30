@@ -1,10 +1,18 @@
 import { ethers, BigNumber } from 'ethers'
 import axios, { AxiosResponse } from 'axios'
-import { createData, InjectedEthereumSigner } from 'arbundles';
+import { createData, deepHash, InjectedEthereumSigner } from 'arbundles';
 
 export type Tag = {
     name: string,
     value: string
+}
+
+interface WithdrawalTx {
+    publicKey: string | Buffer,
+    currency: string,
+    amount: string,
+    nonce: number,
+    signature: Buffer | Uint8Array
 }
 export class BundlrBrowserClient {
     private bundlerAddress: string
@@ -128,4 +136,26 @@ export class BundlrBrowserClient {
         }
         return res
     }
+
+    /**
+     * Request withdrawal of funds deposited with bundler node
+     * @param amount `Ethers BigNumber` representing the amount of the requested withdrawal
+     * @returns `AxiosResponse` representing the success/failure of the request
+     */
+    withdraw = async (amount: BigNumber): Promise<AxiosResponse> => {
+        const res = await axios.get(`${this.bundlerAddress}/account/withdrawals/matic?address=${ethers.utils.computeAddress(this.signer.publicKey)}`);
+        const data = { publicKey: await this.signer.publicKey, currency: "matic", amount: amount.toString(), nonce: res.data } as WithdrawalTx;
+        const deephash = await deepHash([stringToBuffer(data.currency), stringToBuffer(data.amount.toString()), stringToBuffer(data.nonce.toString())]);
+        data.signature = await this.signer.sign(deephash)
+        return axios.post(`${this.bundlerAddress}/account/withdraw`, data);
+    }
+}
+
+function stringToBuffer(data: string) {
+    // TextEncoder will be available in browsers, but not in node
+    if (typeof TextEncoder == "undefined") {
+        const TextEncoder = require("util").TextEncoder;
+        return new TextEncoder().encode(data);
+    }
+    return new TextEncoder().encode(data);
 }

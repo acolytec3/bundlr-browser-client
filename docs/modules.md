@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[bundler.ts:5](https://github.com/acolytec3/bundlr-browser-client/blob/e99829d/src/bundler.ts#L5)
+[bundler.ts:5](https://github.com/acolytec3/bundlr-browser-client/blob/d172eff/src/bundler.ts#L5)
